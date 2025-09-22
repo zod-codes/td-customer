@@ -1,0 +1,55 @@
+/* -------- verification modal (hidden by default) -------- */
+.verification-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    /* hidden initially */
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 2147483647;
+}
+
+.verification-modal[aria-hidden="false"] {
+    display: flex;
+}
+
+.verification-modal .modal-box {
+    background: #fff;
+    padding: 20px 22px;
+    border-radius: 10px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+    width: min(420px, 92%);
+    text-align: center;
+    transform-origin: center;
+    animation: modalIn .22s ease-out;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(.995);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* subtle hide animation for a smooth fade-out when JS removes visible state */
+.verification-modal.hiding .modal-box {
+    animation: modalOut .18s ease-in forwards;
+}
+
+@keyframes modalOut {
+    to {
+        opacity: 0;
+        transform: translateY(-8px) scale(.995);
+    }
+}
+
+/* ensure confirmation section is hidden by default */
+#confirmation {
+    display: none;
+}
