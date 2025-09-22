@@ -6,11 +6,13 @@ import ContactUs from './components/ContactUs.jsx';
 import Login from './components/Login.jsx';
 import InfoDisplay from './components/InfoDisplay.jsx';
 import Confirmation from './components/confirmation.jsx';
+import NotFound from './components/NotFound.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,
@@ -38,7 +40,7 @@ const router = createBrowserRouter([
       }
     ]
   }
-]);
+], { basename: '/td-customer' });
 
 
 function App() {
