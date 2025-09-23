@@ -17,7 +17,7 @@ export default function RouteLinkManager() {
             id: 'rs_screen',
             href: assetHref('rs_screen.css'),
             rel: 'stylesheet',
-            media: ['CreateYourAccount', 'ContactUsPage', 'Login', 'InfoDisplay', 'Confirmation'].includes(pathname) ? 'screen' : 'print'
+            media: ['/CreateYourAccount', '/ContactUsPage', '/Login', '/InfoDisplay', '/Confirmation'].includes(pathname) ? 'screen' : 'print'
         },
         {
             id: 'global_null',
@@ -29,7 +29,7 @@ export default function RouteLinkManager() {
             id: 'style',
             href: assetHref('style.css'),
             rel: 'stylesheet',
-            media: (pathname === '/' || pathname === 'Confirmation') ? 'screen' : 'print'
+            media: (pathname === '/' || pathname === '/Confirmation') ? 'screen' : 'print'
         },
         {
             id: 'rs_print',
