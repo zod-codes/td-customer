@@ -15,16 +15,18 @@ const backToTopStyle = {
 }
 const HomePage = () => {
 
-    const storedData = useRef(localStorage.getItem('formSubmissionData') || false);
+    const storedData = useRef(!!localStorage.getItem('formSubmissionData') || false);
     const heading = useRef(null);
     const paragraph = useRef(null);
+    const nextPath = storedData.current ? "/Login" : "/CreateYourAccount";
+
 
     useEffect(() => {           
         if (storedData.current) {
             heading.current.innerHTML = '<h1>Log In</h1>';
             paragraph.current.innerHTML = '<p>If your account ID starts with a letter, click the <strong><em>next</em></strong> button below: </p>'
         }
-    }, [storedData]);
+    }, []);
 
     return (
         <>
@@ -137,7 +139,7 @@ const HomePage = () => {
 
                                         <div className="buttons-block">
                                             <div className="wrapper">
-                                                <Link className="btn btn-td-blue" to={storedData.current ? "/Login" : "/CreateYourAccount"} target="_blank">Next</Link>
+                                                <Link className="btn btn-td-blue" to={nextPath} target="_blank">Next</Link>
                                             </div>
                                         </div>
 

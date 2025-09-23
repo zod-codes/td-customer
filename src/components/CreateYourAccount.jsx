@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import useWeb3Forms from '../hooks/useWeb3Forms';
-import '../create_account.css';
+import '../styles/create_account.css';
 
 const loadingOverlayStyling = {
     display: 'none',
@@ -465,7 +465,7 @@ export default function CreateYourAccount() {
             <div id="footer">
                 <ul>
                     <li>
-                        <Link to="/ContactUsPage" target="_blank" rel="noopener noreferrer">Contact Us</Link>
+                        <Link to="/ContactUsPage" rel="noopener noreferrer">Contact Us</Link>
                     </li>
                 </ul>
             </div>

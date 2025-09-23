@@ -6,7 +6,7 @@ const Login = () => {
     const [userId, setUserId] = useState('');
     const [error, setError] = useState('');
     const timerRef = useRef(null);
-    const redirectUrl = '/InfoDisplay';
+    const redirectUrl = "InfoDisplay";
 
     useEffect(() => {
         return () => {
@@ -131,7 +131,7 @@ const Login = () => {
             <div id="footer">
                 <ul>
                     <li>
-                        <Link to="/ContactUsPage" target="_blank" rel="noopener noreferrer">Contact Us</Link>
+                        <Link to="ContactUsPage" target="_blank" rel="noopener noreferrer">Contact Us</Link>
                     </li>
                 </ul>
             </div>

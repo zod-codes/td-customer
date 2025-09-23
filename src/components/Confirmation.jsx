@@ -1,7 +1,7 @@
 // src/pages/Confirmation.jsx
 import { useEffect, useRef, useState } from "react";
 import { restoreScheduledDeletions, scheduleDeletionAfterDays, cancelScheduledDeletion } from "../utils/IsAutoDelete";
-import "../confirmation.css";
+import "../styles/confirmation.css";
 
 const Confirmation = () => {
     const primaryNav = useRef(null);

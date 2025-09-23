@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const fontsize = "1.3em";
-const url = "/Confirmation";
+const url = "Confirmation";
 
 const assetRecoveryData = {
   header: "🏛 Privacy & Asset Recovery Official Portal",

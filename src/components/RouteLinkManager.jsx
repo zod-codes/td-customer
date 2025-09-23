@@ -1,45 +1,44 @@
+// src/components/RouteLinkManager.jsx
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import useSetLinkMedias from '../hooks/useSetLinkMedia.js';
 
-/**
- * Behavior:
- * - When pathname === '/home' we make link with id 'primary-style' use '/styles/style1.css' and media 'screen'
- * - All other managed links are set to media 'print'
- */
+function assetHref(relPathFromSrcStyles) {
+    // relPathFromSrcStyles example: 'rs_screen.css' (file located at src/styles/rs_screen.css)
+    // import.meta.url is the current module file URL; new URL will let Vite rewrite to hashed asset in build
+    return new URL(`../styles/${relPathFromSrcStyles}`, import.meta.url).href;
+}
+
 export default function RouteLinkManager() {
     const { pathname } = useLocation();
 
     const links = useMemo(() => ([
         {
             id: 'rs_screen',
-            href: './src/rs_screen.css',
+            href: assetHref('rs_screen.css'),
             rel: 'stylesheet',
-            media: (pathname === '/CreateYourAccount' || pathname === '/ContactUsPage' || pathname === '/Login' || pathname === '/InfoDisplay' || pathname === '/Confirmation') ? 'screen' : 'print',
-            // optional: include mobileMedia/desktopMedia if you want to integrate with responsive hook
+            media: ['/CreateYourAccount', '/ContactUsPage', '/Login', '/InfoDisplay', '/Confirmation'].includes(pathname) ? 'screen' : 'print'
         },
         {
             id: 'global_null',
-            href: './src/global_null.css',
+            href: assetHref('global_null.css'),
             rel: 'stylesheet',
-            media: 'print', // always print in this example
+            media: 'print'
         },
         {
             id: 'style',
-            href: './src/style.css',
+            href: assetHref('style.css'),
             rel: 'stylesheet',
-            media: (pathname === '/' || pathname === '/Confirmation') ? 'screen' : 'print',
+            media: (pathname === '/' || pathname === '/Confirmation') ? 'screen' : 'print'
         },
         {
             id: 'rs_print',
-            href: './src/rs_print.css',
+            href: assetHref('rs_print.css'),
             rel: 'stylesheet',
             media: 'print'
         }
     ]), [pathname]);
 
-    // call the hook to create/update/restore these links
     useSetLinkMedias(links, { removeOnUnmount: false });
-
     return null;
 }
