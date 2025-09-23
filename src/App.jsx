@@ -22,7 +22,7 @@ const router = createBrowserRouter([
       { path: 'Confirmation', element: <Confirmation /> }
     ]
   }
-], { basename: '/td-customer' });
+]);
 
 
 function App() {
