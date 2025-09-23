@@ -58,7 +58,7 @@ export default function CreateYourAccount() {
         function setupAutoAdvance(fromId, toId, maxLength) {
             const fromField = document.getElementById(fromId);
             const toField = document.getElementById(toId);
-            if (!fromField || !toField) return () => { };
+            if (!fromField || !toField) return () => { console.error(fromField, toField) };
             const onInput = () => {
                 if (fromField.value.length >= maxLength) {
                     try { toField.focus(); } catch (e) { console.error(e) };

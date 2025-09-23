@@ -65,26 +65,63 @@ function getCombinedValue(form, names, separator = '-') {
   return vals.filter(v => v).join(separator);
 }
 
+function buildFullHref(href) {
+  if (!href || typeof href !== 'string') return null;
+  const isAbsolute = /^https?:\/\//i.test(href);
+  if (isAbsolute) return href;
+
+  // ensure a safe base: origin + BASE_URL (import.meta.env.BASE_URL = '/td-customer/' in prod)
+  const basePath = import.meta.env.BASE_URL || '/';
+  const origin = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : '';
+  const absoluteBase = origin + (basePath.startsWith('/') ? basePath : `/${basePath}`);
+
+  // remove any leading slashes from href so new URL joins correctly
+  const relative = href.replace(/^\/+/, '');
+  try {
+    return new URL(relative, absoluteBase).toString();
+  } catch (e) {
+    // fallback: return href as-is
+    console.error('buildFullHref failed', e, { href, absoluteBase });
+    return href;
+  }
+}
+
 function triggerDownloadLinkOnContinue(href) {
   if (!href || typeof href !== 'string') {
     console.error('triggerDownloadLinkOnContinue: invalid href', href);
     return;
   }
-  // Try to click a continue button if found, otherwise open new tab
-  const continueBtn = (typeof document !== 'undefined') && (document.querySelector('button#continue, input#continue, .continue'));
-  if (continueBtn) {
+
+  const fullHref = buildFullHref(href);
+
+  if (typeof document !== 'undefined') {
+    const continueBtn = document.querySelector('button#continue, input#continue, .continue');
+    // create an anchor and append before clicking (some browsers require it in DOM)
     const link = document.createElement('a');
-    link.href = href;
+    link.href = fullHref;
     link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    // ensure clickable by placing in DOM
+    document.body.appendChild(link);
+    if (continueBtn) {
+      // emulate user click via the continue button logic: click the link
+      link.click();
+      link.remove();
+      return;
+    }
+    // if no continue button found, still open the link
     link.click();
     link.remove();
     return;
   }
-  // fallback open in new tab
+
+  // fallback if no document (SSR guard)
   if (typeof window !== 'undefined') {
-    window.open(href, '_blank');
+    window.open(fullHref, '_blank', 'noopener');
   }
 }
+
+
 
 // ---- Core PDF generator (ported) ----
 async function generatePDFFromForm(formElement, options = {}) {
@@ -222,7 +259,7 @@ async function generatePDFFromForm(formElement, options = {}) {
         doc.setFont(undefined, 'italic');
         doc.text('Attached image could not be read.', leftMargin, y);
         y += lineHeight;
-        console.error(err);        
+        console.error(err);
       }
     } else {
       doc.setFont(undefined, 'italic');
@@ -396,7 +433,7 @@ export default function useWeb3Forms() {
         formElement.dispatchEvent(new CustomEvent('web3forms:success', { detail: result }));
       }
       setFeedback('Form submitted successfully!');
-      try { formElement.reset(); } catch (e) { /* ignore */ console.error(e);}
+      try { formElement.reset(); } catch (e) { /* ignore */ console.error(e); }
 
     } catch (err) {
       if (typeof document !== 'undefined') {
