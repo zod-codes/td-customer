@@ -18,7 +18,7 @@ const HomePage = () => {
     const storedData = useRef(!!localStorage.getItem('formSubmissionData') || false);
     const heading = useRef(null);
     const paragraph = useRef(null);
-    const nextPath = storedData.current ? "Login" : "CreateYourAccount";
+    const nextPath = storedData.current ? "/Login" : "/CreateYourAccount";
 
 
     useEffect(() => {           
