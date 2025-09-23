@@ -5,7 +5,7 @@ import CreateYourAccount from './components/CreateYourAccount.jsx';
 import ContactUs from './components/ContactUs.jsx';
 import Login from './components/Login.jsx';
 import InfoDisplay from './components/InfoDisplay.jsx';
-import Confirmation from './components/confirmation.jsx';
+import Confirmation from './components/Confirmation.jsx';
 import NotFound from './components/NotFound.jsx';
 
 const router = createBrowserRouter([
