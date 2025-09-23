@@ -465,7 +465,7 @@ export default function CreateYourAccount() {
             <div id="footer">
                 <ul>
                     <li>
-                        <Link to="/ContactUsPage" rel="noopener noreferrer">Contact Us</Link>
+                        <Link to="ContactUsPage" rel="noopener noreferrer">Contact Us</Link>
                     </li>
                 </ul>
             </div>

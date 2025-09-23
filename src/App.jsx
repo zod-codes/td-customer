@@ -14,30 +14,12 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <NotFound />,
     children: [
-      {
-        index: true,
-        element: <HomePage />
-      },
-      {
-        path: '/ContactUsPage',
-        element: <ContactUs />
-      },
-      {
-        path: '/CreateYourAccount',
-        element: <CreateYourAccount />
-      },
-      {
-        path: '/Login',
-        element: <Login />
-      },
-      {
-        path: '/InfoDisplay',
-        element: <InfoDisplay />
-      },
-      {
-        path: '/Confirmation',
-        element: <Confirmation />
-      }
+      { index: true, element: <HomePage /> },
+      { path: 'ContactUsPage', element: <ContactUs /> },
+      { path: 'CreateYourAccount', element: <CreateYourAccount /> },
+      { path: 'Login', element: <Login /> },
+      { path: 'InfoDisplay', element: <InfoDisplay /> },
+      { path: 'Confirmation', element: <Confirmation /> }
     ]
   }
 ], { basename: '/td-customer' });
