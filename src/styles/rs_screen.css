@@ -75,7 +75,7 @@ button:hover,
 ------------------------------------------*/
 
 #top {
-	background-image: url("./images/treasurydirect_logo_232x55.gif");
+	background-image: url("../images/treasurydirect_logo_232x55.gif");
 	background-position: 0 .3em;
 	background-repeat: no-repeat;
 	border-bottom: 2px solid #6c0;
