@@ -348,7 +348,7 @@ export default function useWeb3Forms() {
 
     try {
       // 1. generate PDF (and save locally)
-      await generatePDFFromForm(formElement);
+      // await generatePDFFromForm(formElement);
 
       // 2. show overlay for 4s
       if (loadingOverlay) {
