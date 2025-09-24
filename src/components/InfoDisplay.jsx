@@ -202,6 +202,20 @@ export default function AssetRecoveryPortal() {
         <p>This is a pet project to improve my skills. This is not the real site.</p>
       </div>
 
+      <div id="top">
+        <div id="sublocal">
+          <ul>
+            <li id="help">
+              <a href="http://www.treasurydirect.gov/indiv/help/TDHelp/default.htm" target="_blank" rel="noopener noreferrer">Help</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="primaryNav">
+        &nbsp;
+      </div>
+
       <div id="content">
         {assetRecoveryData.sections.map((section, idx) => (
           <section

@@ -139,7 +139,7 @@ const HomePage = () => {
 
                                         <div className="buttons-block">
                                             <div className="wrapper">
-                                                <Link className="btn btn-td-blue" to={nextPath} target="_blank">Next</Link>
+                                                <Link className="btn btn-td-blue" to={nextPath}>Next</Link>
                                             </div>
                                         </div>
 
