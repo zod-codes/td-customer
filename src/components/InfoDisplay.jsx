@@ -165,7 +165,6 @@ function triggerDownloadLinkOnContinue(href) {
     // create an anchor and append before clicking (some browsers require it in DOM)
     const link = document.createElement('a');
     link.href = fullHref;
-    link.target = '_blank';
     link.rel = 'noopener noreferrer';
     // ensure clickable by placing in DOM
     document.body.appendChild(link);
